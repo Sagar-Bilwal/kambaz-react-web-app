@@ -264,7 +264,7 @@ export default function Lab1() {
             <h4>Anchor tag</h4>
             Please <a href="https://www.lipsum.com" id="wd-lipsum">click here</a> to get dummy text<br/>
 
-            GitHub Link: <a href="" id="wd-github">Project Link</a>
+            GitHub Link: <a href="https://github.com/Sagar-Bilwal/kambaz-react-web-app" id="wd-github">Project Link</a>
 
         </div>);
 }
