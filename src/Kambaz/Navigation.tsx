@@ -9,7 +9,7 @@ export default function KambazNavigation() {
     className="list-group rounded-0 position-fixed
     bottom-0 top-0 d-none d-md-block bg-black z-2">
       <a href="https://www.northeastern.edu/" id="wd-neu-link" target="_blank" className="list-group-item bg-black border-0 text-center">
-      <img src="src/assets/NEU.jpg" width="75px" /></a>
+      <img src="src/assets/NEU_logo.jpg" width="75px" /></a>
       <Link to="/Kambaz/Account" id="wd-account-link" className="list-group-item text-center border-0 bg-black text-white">
        <FaRegCircleUser className="fs-1 text text-white" /><br />
        Account </Link>
