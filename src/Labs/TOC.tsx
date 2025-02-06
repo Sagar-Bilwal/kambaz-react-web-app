@@ -1,4 +1,3 @@
-import { Button, Card } from "react-bootstrap";
 import Nav from "react-bootstrap/Nav";
 export default function TOC() {
  return (
