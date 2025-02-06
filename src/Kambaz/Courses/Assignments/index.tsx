@@ -4,7 +4,6 @@ import { HiOutlineSearch } from "react-icons/hi";
 import AssignmentRightControl from "./AssignmentRightControl";
 import AssignmentLeftControl from "./AssignmentLeftControl";
 import { Link } from "react-router";
-import ModuleControlButtons from "../Modules/ModuleControlButtons";
 import AssignmentItemLeftControl from "./AssignmentItemLeftControl";
 import "./styles.css"
 import LessonControlButtons from "../Modules/LessonControlButtons";
