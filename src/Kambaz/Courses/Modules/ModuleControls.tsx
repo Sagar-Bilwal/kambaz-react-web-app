@@ -1,16 +1,14 @@
 import { FaPlus } from "react-icons/fa6";
 import GreenCheckmark from "./GreenCheckmark";
-import { Button, Dropdown, Row } from "react-bootstrap";
+import { Button, Dropdown } from "react-bootstrap";
 export default function ModulesControls() {
  return (
-    <div id="wd-modules-controls" className="text-nowrap">
-        <Button variant="secondary" className="text-black me-4 flot-end" size = "lg" id = "wd-collapse-all">Collapse All</Button>
-        <Button variant="secondary" className="text-black me-3 flot-end" id = "wd-view-progress" size = "lg">View Progress</Button>
+    <div id="wd-modules-controls" className="text-nowrap pb-2">
         <Button variant="danger" size="lg" className="me-1 float-end" id="wd-add-module-btn">
             <FaPlus className="position-relative me-2" style={{ bottom: "1px" }} />
             Module
         </Button>
-        <Dropdown className="float-end me-2">
+        <Dropdown className="float-end me-1">
             <Dropdown.Toggle variant="secondary" size="lg" id="wd-publish-all-btn">
                 <GreenCheckmark /> Publish All
             </Dropdown.Toggle>
@@ -32,6 +30,8 @@ export default function ModulesControls() {
                 </Dropdown.Item>
             </Dropdown.Menu>
          </Dropdown>
+        <Button variant="secondary" className="text-black me-1 float-end" id = "wd-view-progress" size = "lg">View Progress</Button>
+        <Button variant="secondary" className="text-black me-1 float-end" size = "lg" id = "wd-collapse-all">Collapse All</Button>
     </div>
  );
 }

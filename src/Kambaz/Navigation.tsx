@@ -24,6 +24,5 @@ export default function KambazNavigation() {
       <Link to="/Kambaz/Calendar" id="wd-calendar-link" className="list-group-item text-center bg-black border-0 text-white pb-0"><IoCalendarOutline className="fs-1 text-danger"/>Calendar</Link><br/>
       <Link to="/Kambaz/Inbox" id="wd-inbox-link" className="list-group-item text-center bg-black border-0 text-white pt-0 pb-0"><FaInbox className="text-danger fs-1"/><br/>Inbox</Link><br/>
       <Link to="/Labs" id="wd-labs-link" className="list-group-item text-center bg-black border-0 text-white pt-0"><LiaCogSolid className="text-danger fs-1"/><br/>Labs</Link><br/>
-
     </div>
 );}
