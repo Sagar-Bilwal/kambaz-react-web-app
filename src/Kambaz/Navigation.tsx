@@ -7,7 +7,7 @@ export default function KambazNavigation() {
   return (
     <div id="wd-kambaz-navigation" style={{ width: 120 }} 
     className="list-group rounded-0 position-fixed
-    bottom-0 top-0 d-none d-md-block bg-black z-2">
+    bottom-0 top-0 d-none d-md-block bg-black z-2 pt-2">
       <a href="https://www.northeastern.edu/" id="wd-neu-link" target="_blank" className="list-group-item bg-black border-0 text-center">
       <img src="/images/NEU.jpg" width="75px" /></a>
       <Link to="/Kambaz/Account" id="wd-account-link" className="list-group-item text-center border-0 bg-black text-white">
