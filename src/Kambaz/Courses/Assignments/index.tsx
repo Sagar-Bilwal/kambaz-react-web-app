@@ -3,11 +3,18 @@ import { FiPlus } from "react-icons/fi";
 import { HiOutlineSearch } from "react-icons/hi";
 import AssignmentRightControl from "./AssignmentRightControl";
 import AssignmentLeftControl from "./AssignmentLeftControl";
-import { Link } from "react-router";
+import { Link, useParams } from "react-router";
 import AssignmentItemLeftControl from "./AssignmentItemLeftControl";
 import "./styles.css"
+import * as db from "../../Database"
 import LessonControlButtons from "../Modules/LessonControlButtons";
 export default function Assignments() {
+    const assignments = db.assignments
+    const { cid } = useParams();
+    console.log("Total assignments = "+assignments.length)
+    console.log("Course ID = " + cid)
+    const courseAssignments = assignments.filter((assignment: any) => assignment.course === cid)
+    console.log("Total courseAssignments = "+courseAssignments.length)
     return (
       <div id="wd-assignments">
         <Container className="text-nowrap">
@@ -32,25 +39,28 @@ export default function Assignments() {
         <div id="wd-assignments-title" className="wd-title p-3 ps-2 mb-0 bg-secondary">
         <AssignmentLeftControl/> ASSIGNMENTS <AssignmentRightControl/> <span className="float-end me-3 rounded-pill border border-dark ps-2 pe-2">40% of Total</span></div>
         </ListGroup.Item>
+        {courseAssignments.map((courseAssignment: any ) => (
           <ListGroup.Item className="wd-assignment-list-item pb-0 wd-assignment-item">
-            <Row>
-              <Col className="mt-4" xs="auto">
-                <AssignmentItemLeftControl/>
-              </Col>
-              <Col>
-                <Link to={"123"}
-                  className="wd-assignment-link text-decoration-none text-black" style={{fontWeight: "bold"}}>
-                  A1 - ENV + HTML
-                </Link>
-                <br/>
-                <p><span className="text-danger">Multiple Modules</span> | <b>Not available until</b> May 6 at 12:00am | <b>Due</b> May 13 at 11:59pm | 100 pts</p>
-              </Col>
-              <Col className="pt-4" style={{}}>
-                <LessonControlButtons/>
-              </Col>
-            </Row>
+          <Row>
+            <Col className="mt-4" xs="auto">
+              <AssignmentItemLeftControl/>
+            </Col>
+            <Col>
+              <Link to={`${courseAssignment._id}`}
+                className="wd-assignment-link text-decoration-none text-black" style={{fontWeight: "bold"}}>
+                {courseAssignment.title}
+              </Link>
+              <br/>
+              <p><span className="text-danger">Multiple Modules</span> | <b>Not available until</b> May 6 at 12:00am | <b>Due</b> May 13 at 11:59pm | 100 pts</p>
+            </Col>
+            <Col className="pt-4" style={{}}>
+              <LessonControlButtons/>
+            </Col>
+          </Row>
           </ListGroup.Item>
-          <ListGroup.Item className="wd-assignment-list-item pb-0 wd-assignment-item">
+        ))}
+          
+          {/* <ListGroup.Item className="wd-assignment-list-item pb-0 wd-assignment-item">
             <Row>
               <Col className="mt-4" xs="auto">
                 <AssignmentItemLeftControl/>
@@ -85,7 +95,7 @@ export default function Assignments() {
                 <LessonControlButtons/>
               </Col>
             </Row>
-          </ListGroup.Item>
+          </ListGroup.Item> */}
         </ListGroup>
       </div>
   );}
