@@ -11,10 +11,14 @@ import LessonControlButtons from "../Modules/LessonControlButtons";
 export default function Assignments() {
     const assignments = db.assignments
     const { cid } = useParams();
-    console.log("Total assignments = "+assignments.length)
-    console.log("Course ID = " + cid)
     const courseAssignments = assignments.filter((assignment: any) => assignment.course === cid)
-    console.log("Total courseAssignments = "+courseAssignments.length)
+    const formatDate = (isoString: any) => {
+        const date: any = new Date(isoString);
+        const options: any = { month: "long", day: "numeric", hour: "numeric", minute: "2-digit", hour12: true };
+        const formattedDate = new Intl.DateTimeFormat("en-US", options).format(date);
+        
+        return formattedDate.replace("AM", "am").replace("PM", "pm");
+    };
     return (
       <div id="wd-assignments">
         <Container className="text-nowrap">
@@ -51,7 +55,7 @@ export default function Assignments() {
                 {courseAssignment.title}
               </Link>
               <br/>
-              <p><span className="text-danger">Multiple Modules</span> | <b>Not available until</b> May 6 at 12:00am | <b>Due</b> May 13 at 11:59pm | 100 pts</p>
+              <p><span className="text-danger">Multiple Modules</span> | <b>Not available until</b> {formatDate(courseAssignment.available_date)} | <b>Due</b> {formatDate(courseAssignment.due_date)} | {courseAssignment.points} pts</p>
             </Col>
             <Col className="pt-4" style={{}}>
               <LessonControlButtons/>

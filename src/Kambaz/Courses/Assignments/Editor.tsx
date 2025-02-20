@@ -1,17 +1,26 @@
 import { Button, Col, Form, Row } from "react-bootstrap";
-
+import { useParams } from "react-router";
+import * as db from "../../Database"
 export default function AssignmentEditor() {
+    const { aid } = useParams();
+    const assignments = db.assignments;
+    const currAssignment = assignments.find((assignment) => assignment._id === aid)
+    const formatDateForInput = (isoString: any) => {
+      if (!isoString) return "";
+      const date = new Date(isoString);
+      return date.toISOString().split("T")[0];
+    };
     return (
       <Form id="wd-assignments-editor" className="col-md-6 mt-3 ms-4">
         <Form.Group className="mb-3" controlId="formAssignmentName">
           <Form.Label htmlFor="wd-name">Assignment Name</Form.Label>
-          <Form.Control id="wd-name" value="A1 - ENV + HTML" className="mb-3"/>
-          <Form.Control id="wd-description" as="textarea" value="The assignment is available online Submit a link to the landing page of Website" rows={6}/>
+          <Form.Control id="wd-name" value={`${currAssignment?.title}`} className="mb-3"/>
+          <Form.Control id="wd-description" as="textarea" value={`${currAssignment?.description}`} rows={6}/>
         </Form.Group>
         <Form.Group as={Row} controlId="formPoints">
           <Form.Label column htmlFor="wd-points" sm="3" className="text-end me-0 pe-3">Points</Form.Label>
           <Col sm="9">
-            <Form.Control id="wd-points" value="100" className="mb-3"/>
+            <Form.Control id="wd-points" value={`${currAssignment?.points}`} className="mb-3"/>
           </Col>
         </Form.Group>
         <Form.Group as={Row} controlId="formAssignmentGroups">
@@ -55,11 +64,11 @@ export default function AssignmentEditor() {
             <Form.Label htmlFor="wd-assign-to" className="mt-2">Assign To</Form.Label>
             <Form.Control id="wd-assign-to" value="Everyone" className="mb-3"/>
             <Form.Label htmlFor="wd-due-date">Due</Form.Label>
-            <Form.Control id="wd-assign-to" type="date" className="mb-3" value="2024-05-13"/>
+            <Form.Control id="wd-assign-to" type="date" className="mb-3" value={formatDateForInput(currAssignment?.due_date)}/>
             <Row>
               <Col>
                 <Form.Label htmlFor="wd-due-date">Available From</Form.Label>
-                <Form.Control id="wd-assign-to" type="date" className="mb-3" value="2024-05-13"/>
+                <Form.Control id="wd-assign-to" type="date" className="mb-3" value={formatDateForInput(currAssignment?.available_date)}/>
               </Col>
               <Col>
                 <Form.Label htmlFor="wd-due-date">Until</Form.Label>
