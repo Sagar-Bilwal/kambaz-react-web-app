@@ -9,7 +9,6 @@ import ParentStateComponent from "./ParentStateComponent";
 import PassingDataOnEvent from "./PassingDataOnEvent";
 import PassingFunctions from "./PassingFunctions";
 import ReduxExamples from "./ReduxExamples";
-import HelloRedux from "./ReduxExamples/HelloRedux";
 import StringStateVariables from "./StringStateVariables";
 export default function Lab4() {
     function sayHello() {
