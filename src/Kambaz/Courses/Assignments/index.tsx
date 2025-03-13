@@ -8,6 +8,7 @@ import AssignmentItemLeftControl from "./AssignmentItemLeftControl";
 import "./styles.css"
 import * as db from "../../Database"
 import LessonControlButtons from "../Modules/LessonControlButtons";
+import { useSelector } from "react-redux";
 export default function Assignments() {
     const assignments = db.assignments
     const { cid } = useParams();
@@ -19,6 +20,7 @@ export default function Assignments() {
         
         return formattedDate.replace("AM", "am").replace("PM", "pm");
     };
+    const { currentUser } = useSelector((state: any) => state.accountReducer);
     return (
       <div id="wd-assignments">
         <Container className="text-nowrap">
@@ -32,10 +34,10 @@ export default function Assignments() {
                     id="wd-search-assignment" size="lg" style={{ borderLeft: "none" }}/>
               </InputGroup>
             </Col>
-            <Col>
+            {currentUser != null && currentUser.role === "FACULTY" && <Col>
               <Button id="wd-add-assignment" variant="danger" size="lg" className="float-end me-2"><FiPlus className="position-relative" style={{ bottom: "2px" }} /> Assignment</Button>
               <Button id="wd-add-assignment-group" className="btn btn-secondary me-2 float-end" size="lg"><FiPlus className="position-relative" style={{ bottom: "2px" }} /> Group</Button>
-            </Col>
+            </Col>}
           </Row>
         </Container> <br/> <br/>
         <ListGroup className="rounded-0" id="wd-assignment-list">
