@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { updateAssignment } from "./reducer";
 export default function AssignmentEditor() {
-    const { aid } = useParams();
+    const { aid }:any = useParams();
     const formatDateForInput = (isoString: any) => {
       if (!isoString) return "";
       const date = new Date(isoString);
@@ -39,12 +39,12 @@ export default function AssignmentEditor() {
 
     return (
       <Form id="wd-assignments-editor" className="col-md-6 mt-3 ms-4">
-        <Form.Group className="mb-3" controlId="formAssignmentName">
+        <Form.Group className="mb-3">
           <Form.Label htmlFor="wd-name">Assignment Name</Form.Label>
           <Form.Control id="title" value={assignment.title || ""} onChange={handleChange} className="mb-3" />
           <Form.Control id="description" as="textarea" value={assignment.description || ""} onChange={handleChange} rows={6} />
         </Form.Group>
-        <Form.Group as={Row} controlId="formPoints">
+        <Form.Group as={Row}>
           <Form.Label column htmlFor="wd-points" sm="3" className="text-end me-0 pe-3">Points</Form.Label>
           <Col sm="9">
             <Form.Control id="points" value={assignment.points || ""} onChange={handleChange} className="mb-3" />
@@ -99,7 +99,7 @@ export default function AssignmentEditor() {
             </Col>
               <Col>
                 <Form.Label htmlFor="wd-due-date">Until</Form.Label>
-                <Form.Control id="wd-assign-to" type="date" className="mb-3" value="2024-05-20"/>
+                <Form.Control id="available_until_date" type="date" className="mb-3" value={formatDateForInput(assignment.available_until_date)} onChange={handleChange} />
               </Col>
             </Row>
           </Col>

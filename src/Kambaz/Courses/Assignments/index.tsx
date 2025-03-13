@@ -8,24 +8,22 @@ import AssignmentItemLeftControl from "./AssignmentItemLeftControl";
 import "./styles.css"
 import LessonControlButtons from "../Modules/LessonControlButtons";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteAssignment } from "./reducer";
+import { addAssignment, deleteAssignment } from "./reducer";
 import { useState } from "react";
 import { MdDelete } from "react-icons/md";
-
+import { v4 as uuidv4 } from "uuid";
 export default function Assignments() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
     const {assignments} = useSelector((state: any) => state.assignmentReducer);
 
-    const { cid } = useParams();
+    const { cid }: any = useParams();
     const courseAssignments = assignments.filter((assignment: any) => assignment.course === cid)
-    const formatDate = (isoString: any) => {
-        const date: any = new Date(isoString);
-        const options: any = { month: "long", day: "numeric", hour: "numeric", minute: "2-digit", hour12: true };
-        const formattedDate = new Intl.DateTimeFormat("en-US", options).format(date);
-        
-        return formattedDate.replace("AM", "am").replace("PM", "pm");
+    const formatDateForInput = (isoString: any) => {
+      if (!isoString) return "";
+      const date = new Date(isoString);
+      return date.toISOString().split("T")[0];
     };
     const { currentUser } = useSelector((state: any) => state.accountReducer);
     const [deleteModal, setDeleteModal] = useState(false)
@@ -34,6 +32,13 @@ export default function Assignments() {
       setDeleteModal(false);
     }
     const [selected_assignment_id, set_selected_assignment_id] = useState("");
+    var newAssignmentId = uuidv4();
+    
+    const newAssignment = () => {
+      dispatch(addAssignment({ assignment_id: newAssignmentId, course_id: cid }));
+      navigate(`/Kambaz/Courses/${cid}/Assignments/${newAssignmentId}`)
+    }
+    
     return (
       <div id="wd-assignments">
         <Container className="text-nowrap">
@@ -48,7 +53,7 @@ export default function Assignments() {
               </InputGroup>
             </Col>
             {currentUser != null && currentUser.role === "FACULTY" && <Col>
-              <Button id="wd-add-assignment" variant="danger" size="lg" className="float-end me-2"><FiPlus className="position-relative" style={{ bottom: "2px" }} /> Assignment</Button>
+              <Button id="wd-add-assignment" variant="danger" size="lg" className="float-end me-2" onClick={newAssignment}><FiPlus className="position-relative" style={{ bottom: "2px" }} /> Assignment</Button>
               <Button id="wd-add-assignment-group" className="btn btn-secondary me-2 float-end" size="lg"><FiPlus className="position-relative" style={{ bottom: "2px" }} /> Group</Button>
             </Col>}
           </Row>
@@ -70,7 +75,7 @@ export default function Assignments() {
                 {courseAssignment.title}
               </Link>
               <br/>
-              <p><span className="text-danger">Multiple Modules</span> | <b>Not available until</b> {formatDate(courseAssignment.available_date)} | <b>Due</b> {formatDate(courseAssignment.due_date)} | {courseAssignment.points} pts</p>
+              <p><span className="text-danger">Multiple Modules</span> | <b>Not available until</b> {formatDateForInput(courseAssignment.available_date)} | <b>Due</b> {formatDateForInput(courseAssignment.due_date)} | {courseAssignment.points} pts</p>
             </Col>
             <Col className="pt-4" style={{}}>
             <span className="float-end">

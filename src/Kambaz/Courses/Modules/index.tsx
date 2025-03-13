@@ -4,8 +4,6 @@ import ModuleControlButtons from "./ModuleControlButtons";
 import { BsGripVertical } from "react-icons/bs";
 import LessonControlButtons from "./LessonControlButtons";
 import { useParams } from "react-router";
-import * as db from "../../Database";
-import { v4 as uuidv4 } from "uuid";
 import { FormControl } from "react-bootstrap";
 import { addModule, editModule, updateModule, deleteModule }
   from "./reducer";
