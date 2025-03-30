@@ -1,26 +1,53 @@
 import { Button, Col, Form, Row } from "react-bootstrap";
-import { useParams } from "react-router";
-import * as db from "../../Database"
+import { useNavigate, useParams } from "react-router";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { updateAssignment } from "./reducer";
 export default function AssignmentEditor() {
-    const { aid } = useParams();
-    const assignments = db.assignments;
-    const currAssignment = assignments.find((assignment) => assignment._id === aid)
+    const { aid }:any = useParams();
     const formatDateForInput = (isoString: any) => {
       if (!isoString) return "";
       const date = new Date(isoString);
       return date.toISOString().split("T")[0];
     };
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+  
+    const {assignments} = useSelector((state: any) => state.assignmentReducer);
+    const currAssignment = assignments.find((assignment: any) => assignment._id === aid);
+  
+    const [assignment, setAssignment] = useState(currAssignment || {});
+  
+    useEffect(() => {
+      if (currAssignment) {
+        setAssignment(currAssignment);
+      }
+    }, [currAssignment]);
+  
+    const handleChange = (e: any) => {
+      const { id, value } = e.target;
+      setAssignment((prev: any) => ({
+        ...prev,
+        [id]: value,
+      }));
+    };
+  
+    const handleSave = () => {
+      dispatch(updateAssignment(assignment));
+      navigate(-1);
+    };
+
     return (
       <Form id="wd-assignments-editor" className="col-md-6 mt-3 ms-4">
-        <Form.Group className="mb-3" controlId="formAssignmentName">
+        <Form.Group className="mb-3">
           <Form.Label htmlFor="wd-name">Assignment Name</Form.Label>
-          <Form.Control id="wd-name" value={`${currAssignment?.title}`} className="mb-3"/>
-          <Form.Control id="wd-description" as="textarea" value={`${currAssignment?.description}`} rows={6}/>
+          <Form.Control id="title" value={assignment.title || ""} onChange={handleChange} className="mb-3" />
+          <Form.Control id="description" as="textarea" value={assignment.description || ""} onChange={handleChange} rows={6} />
         </Form.Group>
-        <Form.Group as={Row} controlId="formPoints">
+        <Form.Group as={Row}>
           <Form.Label column htmlFor="wd-points" sm="3" className="text-end me-0 pe-3">Points</Form.Label>
           <Col sm="9">
-            <Form.Control id="wd-points" value={`${currAssignment?.points}`} className="mb-3"/>
+            <Form.Control id="points" value={assignment.points || ""} onChange={handleChange} className="mb-3" />
           </Col>
         </Form.Group>
         <Form.Group as={Row} controlId="formAssignmentGroups">
@@ -63,27 +90,31 @@ export default function AssignmentEditor() {
           <Col sm="9">
             <Form.Label htmlFor="wd-assign-to" className="mt-2">Assign To</Form.Label>
             <Form.Control id="wd-assign-to" value="Everyone" className="mb-3"/>
-            <Form.Label htmlFor="wd-due-date">Due</Form.Label>
-            <Form.Control id="wd-assign-to" type="date" className="mb-3" value={formatDateForInput(currAssignment?.due_date)}/>
-            <Row>
-              <Col>
-                <Form.Label htmlFor="wd-due-date">Available From</Form.Label>
-                <Form.Control id="wd-assign-to" type="date" className="mb-3" value={formatDateForInput(currAssignment?.available_date)}/>
-              </Col>
+            <Form.Label htmlFor="due_date">Due</Form.Label>
+          <Form.Control id="due_date" type="date" className="mb-3" value={formatDateForInput(assignment.due_date)} onChange={handleChange} />
+          <Row>
+            <Col>
+              <Form.Label htmlFor="available_date">Available From</Form.Label>
+              <Form.Control id="available_date" type="date" className="mb-3" value={formatDateForInput(assignment.available_date)} onChange={handleChange} />
+            </Col>
               <Col>
                 <Form.Label htmlFor="wd-due-date">Until</Form.Label>
-                <Form.Control id="wd-assign-to" type="date" className="mb-3" value="2024-05-20"/>
+                <Form.Control id="available_until_date" type="date" className="mb-3" value={formatDateForInput(assignment.available_until_date)} onChange={handleChange} />
               </Col>
             </Row>
           </Col>
         </Form.Group>
         <hr/>
         <Row className="float-end">
-          <Col>
-            <Button className="btn btn-secondary me-1">Cancel</Button>
-            <Button className="btn btn-danger">Save</Button>
-          </Col>
-        </Row>
+        <Col>
+          <Button className="btn btn-secondary me-1" onClick={() => navigate(-1)}>
+            Cancel
+          </Button>
+          <Button className="btn btn-danger" onClick={handleSave}>
+            Save
+          </Button>
+        </Col>
+      </Row>
         </Form>
   );}
   

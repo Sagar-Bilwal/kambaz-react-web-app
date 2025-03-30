@@ -6,13 +6,14 @@ import Modules from "./Modules";
 import CourseNavigation from "./Navigation";
 import { Navigate, Route, Routes, useLocation, useParams } from "react-router";
 import PeopleTable from "./People/Table";
-import { courses } from "../Database";
+import { useSelector } from "react-redux";
 export default function Courses() {
     const {cid} = useParams()
     const {pathname} = useLocation()
     const pathnameList = pathname.split("/");
     const currentLocation = pathnameList[pathnameList.length-1] ? " > "+ pathnameList[4]: "";
-    const course = courses.find((course) => course._id === cid)
+    const { courses } = useSelector((state: any) => state.courseReducer);
+    const course = courses.find((course: any) => course._id === cid)
     return (
       <div id="wd-courses">
         <h2 className="text-danger">
