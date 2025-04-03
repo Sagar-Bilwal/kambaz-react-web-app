@@ -1,7 +1,7 @@
 import { Button, Card, Col, FormControl, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { addNewCourse, updateCourse } from "./Courses/courseReducer";
+import { addNewCourse } from "./Courses/courseReducer";
 import { useState } from "react";
 import { enrollInCourse, unenrollFromCourse } from "./Courses/enrollementReducer";
 import * as userClient from "./Account/client";
