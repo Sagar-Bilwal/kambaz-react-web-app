@@ -16,15 +16,17 @@ export default function Dashboard() {
   const [course, setCourse] = useState<any>({});
   const [showAllCourses, setShowAllCourses] = useState(false);
 
-  const handleEnrollment = (courseId: string) => {
+  const handleEnrollment = async (courseId: string) => {
     const isEnrolled = enrollments.some(
       (enrollment: any) => enrollment.user === currentUser._id && enrollment.course === courseId
     );
 
     if (isEnrolled) {
+      await userClient.unenrollCourse(courseId);
       dispatch(unenrollFromCourse({courseId: courseId, user_id: currentUser._id}));
     } else {
-      dispatch(enrollInCourse({courseId: courseId, user_id: currentUser._id}));
+      const newEnrollmentId = await userClient.enrollCourse(courseId);
+      dispatch(enrollInCourse({_id: newEnrollmentId, courseId: courseId, user_id: currentUser._id}));
     }
   };
 

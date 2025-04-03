@@ -97,8 +97,8 @@ export default function Assignments() {
             </Col>
             <Col className="pt-4" style={{}}>
             <span className="float-end">
-            <a style={{cursor:"pointer"}} onClick={() => {set_selected_assignment_id(courseAssignment._id); setDeleteModal(true)}}>
-            <MdDelete className="text-danger me-2" size={30} /></a>
+            {currentUser != null && currentUser.role === "FACULTY" && <a style={{cursor:"pointer"}} onClick={() => {set_selected_assignment_id(courseAssignment._id); setDeleteModal(true)}}>
+            <MdDelete className="text-danger me-2" size={30} /></a>}
 
               <LessonControlButtons/>
             </span>

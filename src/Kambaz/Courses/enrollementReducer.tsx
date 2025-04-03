@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { v4 as uuidv4 } from "uuid";
 
 const initialState = {
   enrollments: [] as any[],
@@ -10,7 +9,7 @@ const enrollementSlice = createSlice({
   reducers: {
     enrollInCourse: (state, { payload: enrollmentDetails }) => {
       const newModule: any = {
-        _id: uuidv4(),
+        _id: enrollmentDetails._id,
         user: enrollmentDetails.user_id,
         course: enrollmentDetails.courseId,
       };
