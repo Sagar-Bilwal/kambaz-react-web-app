@@ -2,7 +2,6 @@ import axios from "axios";
 
 const REMOTE_SERVER = import.meta.env.VITE_REMOTE_SERVER;
 const COURSES_API = `${REMOTE_SERVER}/api/courses`;
-const ASSIGNMENTS_API = `${REMOTE_SERVER}/api/assignments`;
 const ENROLLMENTS_API = `${REMOTE_SERVER}/api/enrollments`;
 
 export const fetchAllCourses = async () => {
